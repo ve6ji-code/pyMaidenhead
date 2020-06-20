@@ -15,7 +15,6 @@ import math
 import pyAlphaNumericLookup
 import pyGIS
 
-
 def main():
     """Main entry.  Parse user input"""
     def printConsole(lat, lon, loc):
@@ -40,14 +39,16 @@ def main():
             print("{},{}".format(lat, lon))
 
     letters = pyAlphaNumericLookup.lookupTable()
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--verbose",
-                        help="increase output verbosity", action="store_true")
-    parser.add_argument(
-        "locator", help="Maidenhead Grid Locator \n ex. FE34,DO46gs,CN23ha24")
-    args = parser.parse_args()
-    loc = list(args.locator)  # Convert Maidenhead locator to list
-
+    try:
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-v", "--verbose",
+                            help="increase output verbosity", action="store_true")
+        parser.add_argument(
+            "locator", help="Maidenhead Grid Locator \n ex. FE34,DO46gs,CN23ha24")
+        args = parser.parse_args()
+        loc = list(args.locator)  # Convert Maidenhead locator to list
+    except argparse.ArgumentError as identifier:
+        print(identifier)
     # print(loc)
     size = len(loc)  # Get size of list
     if size == 4:
